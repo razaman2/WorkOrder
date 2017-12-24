@@ -10,7 +10,7 @@ class CreatePhonesTable extends Migration
     {
         Schema::create('phones', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
+            $table->enum('type',['home', 'mobile', 'work', 'other']);
             $table->string('phone');
             $table->integer('phoneable_id')->unsigned();
             $table->string('phoneable_type');

@@ -9,7 +9,9 @@ class Phone extends Model
 {
 	use SoftDeletes;
 
-	protected $fillable = ['type', 'phone'];
+	protected $guarded = [];
+
+	protected $hidden = ['phoneable_id', 'phoneable_type'];
 
 	public function phoneable()
 	{

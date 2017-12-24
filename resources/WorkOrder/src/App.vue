@@ -2,9 +2,9 @@
   <!-- Don't drop "q-app" class -->
   <q-pull-to-refresh :handler="refresh">
       <q-layout id="q-app">
-          <q-toolbar v-if="authenticated" color="primary">
+          <q-toolbar color="primary">
               <q-btn flat round icon="menu" />
-              <q-toolbar-title style="cursor: pointer" @click="$router.push('/')">GMI WorkOrder</q-toolbar-title>
+              <q-toolbar-title class="cursor-pointer" @click="$router.push('/')">GMI WorkOrder</q-toolbar-title>
               <q-tabs slot="navigation">
                   <template v-if="!authenticated">
                       <q-route-tab slot="title" to="/login" label="Login" />
@@ -43,7 +43,5 @@
 </script>
 
 <style scoped>
-    #q-app{
 
-    }
 </style>

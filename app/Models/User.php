@@ -11,13 +11,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, SoftDeletes;
 
-    protected $fillable = [
-        'first_name', 'last_name', 'username', 'password',
-    ];
+    protected $fillable = ['first_name', 'last_name', 'username', 'password'];
 
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
 	public function setPasswordAttribute($value)
 	{

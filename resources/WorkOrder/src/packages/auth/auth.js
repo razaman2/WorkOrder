@@ -1,11 +1,13 @@
+import {LocalStorage} from 'quasar';
+
 export default {
 	setToken: token => {
 		token.expires_in = token.expires_in + Date.now();
-		localStorage.setItem('work_order_token', JSON.stringify(token));
+		LocalStorage.set('work_order_token', token);
 	},
 	
 	getToken: function () {
-		let token = JSON.parse(localStorage.getItem('work_order_token'));
+		let token = LocalStorage.get.item('work_order_token');
 		if(!token || !token.access_token || !token.expires_in) {
 			return null;
 		}
@@ -18,7 +20,7 @@ export default {
 	},
 	
 	destroyToken: () => {
-		localStorage.removeItem('work_order_token');
+		LocalStorage.remove('work_order_token');
 	},
 	
 	isAuthenticated: function () {

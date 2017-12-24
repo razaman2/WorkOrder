@@ -10,7 +10,7 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
+            $table->enum('type',['home', 'work', 'other']);
             $table->string('street_1');
             $table->string('street_2')->nullable();
             $table->string('city');

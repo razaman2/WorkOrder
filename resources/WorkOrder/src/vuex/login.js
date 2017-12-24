@@ -4,11 +4,11 @@ export default {
 	actions: {
 		login: (context, user) => {
 			return new Promise((resolve, reject) => {
-				http.post('http://localhost:8000/oauth/token', {
+				http.post('http://workorder.sable:8000/oauth/token', {
 					username: user.email,
 					password: user.password,
 					client_id: 2,
-					client_secret: 'GA4G8morHG0JyrmNn7oeTMpS9LcHY0dUIFbOXObL',
+					client_secret: 'SBPWLi9KqsA01n9PEjhrNnyEWwqzoWvUk3ccsu9C',
 					grant_type: 'password',
 				}).then(response => {
 					auth.setToken(response.data);
@@ -34,7 +34,7 @@ export default {
 		},
 		
 		authUser: context => {
-			http.post('/user', {id: 12}).then(response => {
+			http.post('/user', {id: 10}).then(response => {
 				context.commit('first_name', response.data.first_name);
 				context.commit('last_name', response.data.last_name);
 				context.commit('initEmails', response.data.emails);

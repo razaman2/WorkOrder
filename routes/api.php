@@ -1,7 +1,6 @@
 <?php
 
 	use App\Models\User;
-	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Auth;
 	use Illuminate\Support\Facades\Route;
 
@@ -16,13 +15,34 @@
 	|
 	*/
 
-Route::middleware('auth:api')->post('/user', function (Request $request) {
-	return response()->json(\App\Models\User::with('company')->find(Auth::user()->{'id'}));
-//	return response()->json(User::with(['emails', 'phones', 'addresses'])->find($request->{'id'}));
-});
+	Route::middleware('auth:api')->post('/user', function () {
+		return response()->json(User::with(['emails','phones','addresses','roles','company'])->find(Auth::user()->{'id'}));
+	});
 
-Route::middleware('role')->post('/signup','Auth\RegisterController@create');
+	Route::post('/signup','Auth\RegisterController@create');
 
-Route::middleware('auth:api')->post('/test',function(Request $request){
-	return response()->json(\App\Models\User::with('company')->find(Auth::user()->{'id'}));
-});
+	Route::get('/user/{id?}', function($id = null) {
+		if(!$id) {
+			$users = User::all();
+		} else {
+			$users = User::whereid($id)->get();
+		}
+		return response()->json($users);
+	});
+
+	Route::get('/company/{id?}', function($id = null) {
+		if(!$id) {
+			$company = \App\Models\Company::all();
+		} else {
+			$company = \App\Models\Company::whereid($id)->get();
+		}
+		return response()->json($company);
+	});
+
+	Route::post('/user/password/update', function(\Illuminate\Http\Request $request) {
+		return Auth::user()->update(['password'=>$request->password]);
+	});
+
+	Route::post('/user/username/update', function(\Illuminate\Http\Request $request) {
+		return Auth::user()->update(['username'=>$request->username]);
+	});

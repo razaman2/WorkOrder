@@ -68,43 +68,34 @@ class RegisterController extends Controller
     {
     	$user = null;
 
-    	DB::transaction(function() use ($request, &$user){
-    		$user = \App\Models\Company::first()->users()->save(new User([
-    			'first_name'=>$request->user['first_name'],
-			    'last_name'=>$request->user['last_name'],
-			    'username'=>$request->user['username'],
-			    'password'=>$request->user['password'],
-		    ]));
+    	DB::transaction(function() use ($request, &$user) {
+    		$user = \App\Models\Company::first()->users()->save(new User(
+    			collect($request->user)->only(['first_name','last_name','username','password'])->toArray()
+		    ));
 
-    		$user->emails()->saveMany(collect($request->user['emails'])->map(function($item){
-    			return new \App\Models\Email([
-    				'type'=>$item['type'],
-				    'email'=>$item['email'],
-			    ]);
+    		$user->emails()->saveMany(collect($request->user['emails'])->map(function($email) {
+    			return new \App\Models\Email(
+    				collect($email)->only(['type','email'])->toArray()
+			    );
 		    }));
 
-		    $user->phones()->saveMany(collect($request->user['phones'])->map(function($item){
-			    return new \App\Models\Phone([
-			    	'type'=>$item['type'],
-				    'phone'=>$item['phone'],
-			    ]);
+		    $user->phones()->saveMany(collect($request->user['phones'])->map(function($phone) {
+			    return new \App\Models\Phone(
+			    	collect($phone)->only(['type','phone'])->toArray()
+			    );
 		    }));
 
-		    $user->addresses()->saveMany(collect($request->user['addresses'])->map(function($item){
-			    return new \App\Models\Address(collect($item)->except('edit')->toArray());
+		    $user->addresses()->saveMany(collect($request->user['addresses'])->map(function($address) {
+			    return new \App\Models\Address(collect($address)->except('edit')->toArray());
 		    }));
 
-		    if(count($request->user['roles']))
-		    {
+		    if(count($request->user['roles'])) {
 			    $user->roles()->attach($request->user['roles']);
-		    }
-		    else
-		    {
-		    	$user->roles()->attach(2);
+		    } else {
+		    	$user->roles()->attach(\App\Models\Role::whereRole('user')->first());
 		    }
 	    });
 
 	    return response()->json(User::with(['emails', 'phones', 'addresses', 'roles'])->find($user->{'id'}));
     }
-
 }

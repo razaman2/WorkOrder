@@ -11,6 +11,8 @@ class Email extends Model
 
 	protected $guarded = [];
 
+	protected $hidden = ['emailable_id', 'emailable_type'];
+
 	public function emailable()
 	{
 		return $this->morphTo();

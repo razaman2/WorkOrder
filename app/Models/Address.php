@@ -11,6 +11,8 @@ class Address extends Model
 
 	protected $guarded = [];
 
+	protected $hidden = ['addressable_id', 'addressable_type'];
+
 	public function addressable()
 	{
 		return $this->morphTo();

@@ -10,7 +10,7 @@ class CreateEmailsTable extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
+            $table->enum('type',['personal', 'work', 'other']);
             $table->string('email')->unique();
 	        $table->integer('emailable_id')->unsigned();
 	        $table->string('emailable_type');

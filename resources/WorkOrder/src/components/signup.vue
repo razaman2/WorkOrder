@@ -1,8 +1,9 @@
 <template>
     <div class="column">
-        <q-card class="signup">
-            <q-card-title>Create User</q-card-title>
-            <q-card>
+        <h3 class="row justify-center shadow-up-3 text-grey">WorkOrder Signup</h3>
+        <q-card class="signup no-margin">
+            <q-card-title class="shadow-5">User Information</q-card-title>
+            <q-card class="shadow-3">
                 <q-card-main>
                     <q-input type="text" float-label="First Name" v-model="first_name" />
                     <q-input type="text" float-label="Last Name" v-model="last_name" />
@@ -10,11 +11,9 @@
                     <div v-if="created" class="row justify-end">
                         <q-btn class="text-blue" flat>Change Username</q-btn>
                     </div>
-                    <template v-if="!created">
-                        <q-input type="password" float-label="Password" v-model="password" />
-                        <q-input type="password" float-label="Confirm Password" v-model="confirmPassword" />
-                    </template>
-                    <div class="row justify-end" v-else>
+                    <q-input type="password" float-label="Password" v-model="password" />
+                    <q-input type="password" float-label="Confirm Password" v-model="confirmPassword" />
+                    <div v-if="created" class="row justify-end">
                         <q-btn class="text-blue" flat>Change Password</q-btn>
                     </div>
                 </q-card-main>
@@ -26,7 +25,7 @@
                 </q-list>
             </q-card>
             <q-card-separator />
-            <q-card-actions align="end">
+            <q-card-actions align="end" class="shadow-up-2">
                 <q-btn class="text-green" ref="signup" @click="signup" flat>Signup</q-btn>
             </q-card-actions>
         </q-card>
@@ -105,6 +104,8 @@
                 }).catch(error => {
 			        this.$refs.signup.loading = false;
                 });
+            },
+            updateUsername () {
             }
         }
 	}
@@ -114,10 +115,5 @@
     .signup{
         background-color: lightgrey;
         border: .1em solid grey;
-    }
-    .user-image{
-        border-radius: 50%;
-        height: 100px;
-        width: 100px;
     }
 </style>
