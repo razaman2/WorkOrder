@@ -1,0 +1,17 @@
+### get the count of all cs numbers
+POST https://sablecrm.pro/api/cs/get?companyId=2144870000000459009&count
+
+### get all cs numbers
+POST https://sablecrm.pro/api/cs/get?companyId=2144870000000459009
+
+### get 5 cs numbers
+POST https://sablecrm.pro/api/cs/get?companyId=2144870000000459009&limit=5
+
+### get 2 available cs numbers
+POST https://sablecrm.pro/api/cs/get?companyId=2144870000000459009&status=available&limit=2
+
+### get 2 reserved cs numbers
+POST https://sablecrm.pro/api/cs/get?companyId=2144870000000459009&status=reserved&limit=2
+
+### find a specific cs number
+POST https://sablecrm.pro/api/cs/get?companyId=2144870000000459009&cs=762045990
